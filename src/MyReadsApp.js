@@ -2,6 +2,7 @@ import React from "react";
 import * as BooksAPI from "data/BooksAPI";
 import { Route } from "react-router-dom";
 import ShelfList from "./components/BookShelves/ShelfList";
+import Search from "./components/Search";
 import "./MyReadsApp.css";
 
 const getBooks = () =>
@@ -23,13 +24,7 @@ function MyReadsApp() {
           />
         )}
       />
-      {/* <Route
-        exact
-        path="/search"
-        render={() => (
-
-        )}
-      /> */}
+      <Route exact path="/search" render={() => <Search />} />
     </div>
   );
 }
