@@ -1,6 +1,7 @@
 import React from "react";
 // import * as BooksAPI from "../data/BooksAPI";
 
+// Copied from Udacity Starter Code
 class Search extends React.Component {
   render() {
     return (
@@ -27,5 +28,6 @@ class Search extends React.Component {
     );
   }
 }
+// Copied from Udacity Starter Code
 
 export default Search;

@@ -1,0 +1,10 @@
+.book {
+    height: 250px;
+    width: 250px;
+}
+
+.book__image {
+    max-width: 150%;
+    max-height: 100%;
+    margin: 5px;
+}
