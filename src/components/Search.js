@@ -1,37 +1,83 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-// import * as BooksAPI from "../data/BooksAPI";
+import Book from "./Book";
+import * as BooksAPI from "../data/BooksAPI";
 
 // Copied from Udacity Starter Code
 class Search extends React.Component {
+  static propTypes = {
+    bookArray: PropTypes.array.isRequired,
+    shelfList: PropTypes.array.isRequired,
+    changeShelf: PropTypes.func.isRequired,
+  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchError: false,
+      userQuery: "",
+      queriedBooks: [],
+    };
+  }
+
+  searchBooks = (event) => {
+    const userQuery = event.target.value;
+    this.setState({ userQuery });
+
+    if (userQuery.length > 0) {
+      // remove spaces from userQuery
+      BooksAPI.search(userQuery.replace(" ", ""), 20).then((bookArray) => {
+        bookArray.length > 0
+          ? this.setState({ queriedBooks: bookArray, searchError: false })
+          : this.setState({ queriedBooks: [], searchError: true });
+      });
+
+      // if userQuery is empty => reset state to default
+    } else this.setState({ queriedBooks: [], searchError: false });
+  };
+
   render() {
+    const { userQuery, queriedBooks, searchError } = this.state;
+    const { bookArray, changeShelf } = this.props;
+
     return (
       <div className="search-books">
         <div className="search-books-bar">
-          <button
-            className="close-search"
-            onClick={() => this.setState({ showSearchPage: false })}
-          >
+          <Link className="close-search" to="/">
             Close
-          </button>
+          </Link>
           <div className="search-books-input-wrapper">
-            {/*
-                  NOTES: The search from BooksAPI is limited to a particular set of search terms.
-                  You can find these search terms here:
-                  https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-                  However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-                  you don't find a specific author or title. Every search is limited by search terms.
-                */}
-            <input type="text" placeholder="Search by title or author" />
+            <input
+              type="text"
+              placeholder="Search by title or author"
+              value={userQuery}
+              onChange={this.searchBooks}
+            />
           </div>
         </div>
-        <div className="home__link">
-          <Link to="/">Home</Link>
+        <div className="search-books-results">
+          {queriedBooks.length > 0 && (
+            <div>
+              <h3>Search returned {queriedBooks.length} books </h3>
+              <ol className="books-grid">
+                {queriedBooks.map((book) => (
+                  <Book
+                    key={book.id}
+                    book={book}
+                    changeShelf={changeShelf}
+                    bookArray={bookArray}
+                  />
+                ))}
+              </ol>
+            </div>
+          )}
+          {searchError && (
+            <h3>Search did not return any books. Please try again!</h3>
+          )}
         </div>
       </div>
     );
   }
 }
-// Copied from Udacity Starter Code
 
 export default Search;

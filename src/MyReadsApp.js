@@ -72,7 +72,11 @@ class MyReadsApp extends React.Component {
           <Route
             path="/search"
             element={
-              <Search bookArray={bookArray} changeShelf={this.changeShelf} />
+              <Search
+                bookArray={bookArray}
+                shelfList={shelfList}
+                changeShelf={this.changeShelf}
+              />
             }
           />
           <Route
