@@ -1,17 +1,10 @@
 import React from "react";
 import { Fragment } from "react";
 import * as BooksAPI from "./data/BooksAPI";
+import BookShelf from "./components/BookShelf";
+import ShelfList from "./components/ShelfList";
 import Book from "./components/Book";
-import { Link } from "react-router-dom";
-import { Route } from "react-router-dom";
-// import { ShelfList } from "./components/BookShelves/ShelfList";
 import "./MyReadsApp.css";
-import Search from "./components/Search";
-
-// BOOK KEYS:
-// title, authors, publishedDate, description, industryIdentifiers, readingModes,
-// pageCount, printType, maturityRating, allowAnonLogging, contentVersion,
-// panelizationSummary, imageLinks, language, previewLink, infoLink, canonicalVolumeLink, id, shelf
 class MyReadsApp extends React.Component {
   constructor(props) {
     super(props);
@@ -20,24 +13,13 @@ class MyReadsApp extends React.Component {
       currentlyReadingArray: [],
       wantToReadArray: [],
       finishedReadingArray: [],
+      shelfList: [
+        { key: "currentlyReading", value: "Currently Reading" },
+        { key: "wantToRead", value: "Want to Read" },
+        { key: "read", value: "Read" },
+      ],
     };
-    this.changeBookShelf = this.changeBookShelf.bind(this);
   }
-
-  changeBookShelf = async (book, targetShelf) => {
-    await BooksAPI.update(book, targetShelf);
-    this.updateBookArray();
-  };
-  // changeBookShelf = (e) => {
-  //   const newShelf = {
-  //     book: this.props.book,
-  //     shelf:
-  //   }
-  //   e.preventDefault();
-  //   BooksAPI.update(book, targetShelf).then(
-  //     this.updateBookArray()
-  //   )
-  // };
 
   updateBookArray = async () => {
     const data = await BooksAPI.getAll();
@@ -63,61 +45,31 @@ class MyReadsApp extends React.Component {
     console.log("finished", finishedReads);
   };
 
+  changeShelf = async (targetBook, newShelf) => {
+    const data = await BooksAPI.update(targetBook, newShelf);
+    this.setState(() => ({
+      bookArray: data,
+    })).then(this.updateBookArray());
+  };
+
   componentDidMount() {
     this.updateBookArray();
   }
 
   render() {
+    const { bookArray, shelfList } = this.state;
     return (
-      <div className="app">
-        <Fragment>
-          <h2 className="shelf__list__header">MyReads</h2>
-          <div className="shelf__list__container">
-            <div className="shelf__list__currentlyReading">
-              <h3>Currently Reading</h3>
-              {this.state.bookArray
-                .filter((book) => book.shelf === "currentlyReading")
-                .map((book) => (
-                  <Book
-                    book={book}
-                    key={book.id}
-                    handleChangeBookShelf={this.changeBookShelf}
-                  />
-                ))}
-            </div>
-            <div className="shelf__list__wantToRead">
-              <h3>Want To Read</h3>
-              {this.state.bookArray
-                .filter((book) => book.shelf === "wantToRead")
-                .map((book) => (
-                  <Book
-                    book={book}
-                    key={book.id}
-                    handleChangeBookShelf={this.changeBookShelf}
-                  />
-                ))}
-            </div>
-            <div className="shelf__list__finishedReading">
-              <h3>Finished Reading</h3>
-              {this.state.bookArray
-                .filter((book) => book.shelf === "read")
-                .map((book) => (
-                  <Book
-                    book={book}
-                    key={book.id}
-                    handleChangeBookShelf={this.changeBookShelf}
-                  />
-                ))}
-            </div>
-            {/* <div className="open-search">
-              <Link to="/search">Add a book</Link>
-            </div> */}
-          </div>
-        </Fragment>
-      </div>
+      <Fragment>
+        <ShelfList
+          bookArray={bookArray}
+          shelfList={shelfList}
+          changeShelf={this.changeShelf}
+        />
+      </Fragment>
     );
   }
 }
+
 //   render() {
 //     return (
 //       <div className="app">
@@ -129,7 +81,11 @@ class MyReadsApp extends React.Component {
 //               {this.state.bookArray
 //                 .filter((book) => book.shelf === "currentlyReading")
 //                 .map((book) => (
-//                   <Book book={book} key={book.id} />
+//                   <Book
+//                     // pass props to child
+//                     book={book}
+//                     key={book.id}
+//                   />
 //                 ))}
 //             </div>
 //             <div className="shelf__list__wantToRead">
@@ -137,7 +93,13 @@ class MyReadsApp extends React.Component {
 //               {this.state.bookArray
 //                 .filter((book) => book.shelf === "wantToRead")
 //                 .map((book) => (
-//                   <Book book={book} key={book.id} />
+//                   <Book
+//                     book={book}
+//                     key={book.id}
+//                     changeShelf={(targetBook, newShelf) => {
+//                       this.changeShelf(targetBook, newShelf);
+//                     }}
+//                   />
 //                 ))}
 //             </div>
 //             <div className="shelf__list__finishedReading">
@@ -148,13 +110,11 @@ class MyReadsApp extends React.Component {
 //                   <Book book={book} key={book.id} />
 //                 ))}
 //             </div>
-//             <div className="open-search">
-//               <Link to="/search">Add a book</Link>
-//             </div>
 //           </div>
 //         </Fragment>
 //       </div>
 //     );
 //   }
 // }
+
 export default MyReadsApp;
