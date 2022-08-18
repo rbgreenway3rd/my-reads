@@ -4,17 +4,23 @@ import Book from "./Book";
 
 class BookShelf extends React.Component {
   static propTypes = {
-    books: PropTypes.array.isRequired,
+    bookArray: PropTypes.array.isRequired,
+    shelfBooks: PropTypes.array.isRequired,
     changeShelf: PropTypes.func.isRequired,
   };
 
   render() {
-    const { books, changeShelf } = this.props;
+    const { shelfBooks, changeShelf, bookArray } = this.props;
 
     return (
       <ol className="shelf__book">
-        {books.map((book) => (
-          <Book key={book.id} book={book} changeShelf={changeShelf} />
+        {shelfBooks.map((book) => (
+          <Book
+            key={book.id}
+            book={book}
+            changeShelf={changeShelf}
+            bookArray={bookArray}
+          />
         ))}
       </ol>
     );

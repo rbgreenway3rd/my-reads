@@ -45,11 +45,15 @@ class MyReadsApp extends React.Component {
     console.log("finished", finishedReads);
   };
 
-  changeShelf = async (targetBook, newShelf) => {
-    const data = await BooksAPI.update(targetBook, newShelf);
-    this.setState(() => ({
-      bookArray: data,
-    })).then(this.updateBookArray());
+  changeShelf = (targetBook, newShelf) => {
+    BooksAPI.update(targetBook, newShelf).then(() => {
+      targetBook.shelf = newShelf;
+      this.setState((prev) => ({
+        bookArray: prev.bookArray
+          .filter((updatedBook) => updatedBook.id !== targetBook.id)
+          .concat(targetBook),
+      }));
+    });
   };
 
   componentDidMount() {

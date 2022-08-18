@@ -2,7 +2,7 @@ import React from "react";
 import BookShelf from "./BookShelf";
 
 const ShelfList = (props) => {
-  const { bookArray, changeShelf, shelfList } = props;
+  const { bookArray, shelfList, changeShelf } = props;
   //   const shelfList = [
   //     { key: "currentlyReading", value: "Currently Reading" },
   //     { key: "wantToRead", value: "Want to Read" },
@@ -14,10 +14,14 @@ const ShelfList = (props) => {
       {shelfList.map((shelf) => {
         const shelfBooks = bookArray.filter((book) => book.shelf === shelf.key);
         return (
-          <div className="bookshelf" key={shelf.key} value={shelf.value}>
-            <h2 className="bookshelf__title">{shelf.value}</h2>
-            <div className="bookshelf__books">
-              <BookShelf books={shelfBooks} changeShelf={changeShelf} />
+          <div className="bookShelf" key={shelf.key} value={shelf.value}>
+            <h2 className="bookShelf__title">{shelf.value}</h2>
+            <div className="bookShelf__books">
+              <BookShelf
+                shelfBooks={shelfBooks}
+                changeShelf={changeShelf}
+                bookArray={bookArray}
+              />
             </div>
           </div>
         );

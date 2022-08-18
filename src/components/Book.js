@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import ShelfChanger from "./ShelfChanger";
 
 class Book extends React.Component {
   static propTypes = {
@@ -7,7 +8,6 @@ class Book extends React.Component {
     book: PropTypes.object,
     changeShelf: PropTypes.func.isRequired,
   };
-
   constructor(props) {
     super(props);
     this.state = {
@@ -21,14 +21,11 @@ class Book extends React.Component {
   }
 
   handleChangeShelf(event) {
-    if (this.props.changeShelf) {
-      this.props.changeShelf(this.props.book, event.target.value);
-    }
+    this.props.changeShelf(this.props.book, event.target.value);
   }
 
   render() {
-    const { bookArray, book } = this.props;
-
+    const { bookArray, book, changeShelf } = this.props;
     let bookImage = book.imageLinks ? book.imageLinks.thumbnail : "";
 
     return (
@@ -38,6 +35,11 @@ class Book extends React.Component {
         </div>
         <div className="book__title">{book.title}</div>
         <div className="book__authors">{book.authors}</div>
+        <ShelfChanger
+          book={book}
+          bookArray={bookArray}
+          changeShelf={changeShelf}
+        />
       </div>
     );
   }
