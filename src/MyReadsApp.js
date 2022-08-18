@@ -2,9 +2,13 @@ import React from "react";
 import { Fragment } from "react";
 import * as BooksAPI from "./data/BooksAPI";
 import BookShelf from "./components/BookShelf";
+import Header from "./components/Header";
 import ShelfList from "./components/ShelfList";
 import Book from "./components/Book";
 import "./MyReadsApp.css";
+import Search from "./components/Search";
+import { Route, Link, Routes } from "react-router-dom";
+
 class MyReadsApp extends React.Component {
   constructor(props) {
     super(props);
@@ -16,7 +20,7 @@ class MyReadsApp extends React.Component {
       shelfList: [
         { key: "currentlyReading", value: "Currently Reading" },
         { key: "wantToRead", value: "Want to Read" },
-        { key: "read", value: "Read" },
+        { key: "read", value: "Finished Reading" },
       ],
     };
   }
@@ -63,13 +67,31 @@ class MyReadsApp extends React.Component {
   render() {
     const { bookArray, shelfList } = this.state;
     return (
-      <Fragment>
-        <ShelfList
-          bookArray={bookArray}
-          shelfList={shelfList}
-          changeShelf={this.changeShelf}
-        />
-      </Fragment>
+      <div className="app">
+        <Routes>
+          <Route
+            path="/search"
+            element={
+              <Search bookArray={bookArray} changeShelf={this.changeShelf} />
+            }
+          />
+          <Route
+            exact
+            path="/"
+            element={
+              <div className="home">
+                <Header className="header" />
+                <ShelfList
+                  className="shelfList"
+                  bookArray={bookArray}
+                  shelfList={shelfList}
+                  changeShelf={this.changeShelf}
+                />
+              </div>
+            }
+          />
+        </Routes>
+      </div>
     );
   }
 }

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 // import * as BooksAPI from "../data/BooksAPI";
 
 // Copied from Udacity Starter Code
@@ -23,6 +24,9 @@ class Search extends React.Component {
                 */}
             <input type="text" placeholder="Search by title or author" />
           </div>
+        </div>
+        <div className="home__link">
+          <Link to="/">Home</Link>
         </div>
       </div>
     );
