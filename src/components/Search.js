@@ -8,6 +8,7 @@ import * as BooksAPI from "../data/BooksAPI";
 class Search extends React.Component {
   static propTypes = {
     bookArray: PropTypes.array.isRequired,
+    updateBookArray: PropTypes.func.isRequired,
     shelfList: PropTypes.array.isRequired,
     changeShelf: PropTypes.func.isRequired,
   };
@@ -23,7 +24,7 @@ class Search extends React.Component {
   searchBooks = (event) => {
     const userQuery = event.target.value;
     this.setState({ userQuery });
-
+    // if app detects user input, begin running query
     if (userQuery.length > 0) {
       // remove spaces from userQuery
       BooksAPI.search(userQuery.replace(" ", ""), 20).then((bookArray) => {
@@ -32,22 +33,23 @@ class Search extends React.Component {
           : this.setState({ queriedBooks: [], searchError: true });
       });
 
-      // if userQuery is empty => reset state to default
+      // empty out "userQuery" state to end search
     } else this.setState({ queriedBooks: [], searchError: false });
   };
 
   render() {
     const { userQuery, queriedBooks, searchError } = this.state;
-    const { bookArray, changeShelf } = this.props;
+    const { bookArray, changeShelf, updateBookArray } = this.props;
 
     return (
-      <div className="search-books">
-        <div className="search-books-bar">
-          <Link className="close-search" to="/">
+      <div className="container">
+        <div className="search__bar">
+          <Link className="close__search" to="/">
             Close
           </Link>
-          <div className="search-books-input-wrapper">
+          <div className="search__input__container">
             <input
+              className="search__input"
               type="text"
               placeholder="Search by title or author"
               value={userQuery}
@@ -55,11 +57,14 @@ class Search extends React.Component {
             />
           </div>
         </div>
-        <div className="search-books-results">
+        <div className="search__results">
           {queriedBooks.length > 0 && (
             <div>
-              <h3>Search returned {queriedBooks.length} books </h3>
-              <ol className="books-grid">
+              <h3>
+                MyReads has found {queriedBooks.length} books that match your
+                query:
+              </h3>
+              <ol className="books">
                 {queriedBooks.map((book) => (
                   <Book
                     key={book.id}
@@ -72,7 +77,9 @@ class Search extends React.Component {
             </div>
           )}
           {searchError && (
-            <h3>Search did not return any books. Please try again!</h3>
+            <h3>
+              Sorry! MyReads can't find any books that match your search...
+            </h3>
           )}
         </div>
       </div>

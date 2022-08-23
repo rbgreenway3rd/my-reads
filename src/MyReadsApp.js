@@ -7,7 +7,15 @@ import ShelfList from "./components/ShelfList";
 import Book from "./components/Book";
 import "./MyReadsApp.css";
 import Search from "./components/Search";
-import { Route, Link, Routes } from "react-router-dom";
+import {
+  Route,
+  Link,
+  Routes,
+  Redirect,
+  useNavigate,
+  useLocation,
+  Navigate,
+} from "react-router-dom";
 
 class MyReadsApp extends React.Component {
   constructor(props) {
@@ -47,17 +55,26 @@ class MyReadsApp extends React.Component {
     console.log("current", currentReads);
     console.log("want", wantToReads);
     console.log("finished", finishedReads);
+    console.log(window.location.pathname);
   };
 
   changeShelf = (targetBook, newShelf) => {
-    BooksAPI.update(targetBook, newShelf).then(() => {
-      targetBook.shelf = newShelf;
-      this.setState((prev) => ({
-        bookArray: prev.bookArray
-          .filter((updatedBook) => updatedBook.id !== targetBook.id)
-          .concat(targetBook),
-      }));
-    });
+    let currentPathname = window.location.pathname;
+    BooksAPI.update(targetBook, newShelf)
+      .then(() => {
+        targetBook.shelf = newShelf;
+        this.setState((prev) => ({
+          bookArray: prev.bookArray
+            .filter((updatedBook) => updatedBook.id !== targetBook.id)
+            .concat(targetBook),
+        }));
+      })
+      .then(() => {
+        this.updateBookArray();
+      })
+      .then(() => {
+        return <Navigate to="/" />;
+      });
   };
 
   componentDidMount() {
@@ -76,6 +93,7 @@ class MyReadsApp extends React.Component {
                 bookArray={bookArray}
                 shelfList={shelfList}
                 changeShelf={this.changeShelf}
+                updateBookArray={this.updateBookArray}
               />
             }
           />

@@ -21,28 +21,27 @@ class ShelfChanger extends React.Component {
   render() {
     const { book } = this.props;
     const books = this.props.bookArray;
-    let { currentShelf } = this.props;
-
+    let shelf = "none";
     // Using a "for... of" loop to return the values from the key-value pairs
     // Note: a "for... in" loop would return the keys from the key-value pairs
     for (let b of books) {
       // check if book is already in current list; break if so
       if (b.id === book.id) {
-        currentShelf = b.shelf;
+        shelf = b.shelf;
         break;
       }
     }
 
     return (
       <div className="book-shelf-changer">
-        <select onChange={this.onChangeShelf} defaultValue={currentShelf}>
+        <select onChange={this.onChangeShelf} defaultValue={shelf}>
           <option value="none" disabled>
-            Move to...
+            Add to Shelf...
           </option>
           <option value="currentlyReading">Currently Reading</option>
           <option value="wantToRead">Want to Read</option>
           <option value="read">Finished Reading</option>
-          <option value="none">None</option>
+          <option value="remove">Remove</option>
         </select>
       </div>
     );
