@@ -3,11 +3,6 @@ import BookShelf from "./BookShelf";
 
 const ShelfList = (props) => {
   const { bookArray, shelfList, changeShelf } = props;
-  //   const shelfList = [
-  //     { key: "currentlyReading", value: "Currently Reading" },
-  //     { key: "wantToRead", value: "Want to Read" },
-  //     { key: "read", value: "Read" },
-  //   ];
 
   return (
     <div className="bookShelves">

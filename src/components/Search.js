@@ -26,8 +26,7 @@ class Search extends React.Component {
     this.setState({ userQuery });
     // if app detects user input, begin running query
     if (userQuery.length > 0) {
-      // remove spaces from userQuery
-      BooksAPI.search(userQuery.replace(" ", ""), 20).then((bookArray) => {
+      BooksAPI.search(userQuery).then((bookArray) => {
         bookArray.length > 0
           ? this.setState({ queriedBooks: bookArray, searchError: false })
           : this.setState({ queriedBooks: [], searchError: true });

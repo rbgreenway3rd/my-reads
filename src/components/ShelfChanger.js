@@ -36,7 +36,7 @@ class ShelfChanger extends React.Component {
       <div className="book-shelf-changer">
         <select onChange={this.onChangeShelf} defaultValue={shelf}>
           <option value="none" disabled>
-            Add to Shelf...
+            None
           </option>
           <option value="currentlyReading">Currently Reading</option>
           <option value="wantToRead">Want to Read</option>

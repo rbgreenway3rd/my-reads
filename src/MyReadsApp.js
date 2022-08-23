@@ -1,21 +1,10 @@
 import React from "react";
-import { Fragment } from "react";
 import * as BooksAPI from "./data/BooksAPI";
-import BookShelf from "./components/BookShelf";
 import Header from "./components/Header";
 import ShelfList from "./components/ShelfList";
-import Book from "./components/Book";
 import "./MyReadsApp.css";
 import Search from "./components/Search";
-import {
-  Route,
-  Link,
-  Routes,
-  Redirect,
-  useNavigate,
-  useLocation,
-  Navigate,
-} from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 
 class MyReadsApp extends React.Component {
   constructor(props) {
@@ -59,7 +48,6 @@ class MyReadsApp extends React.Component {
   };
 
   changeShelf = (targetBook, newShelf) => {
-    let currentPathname = window.location.pathname;
     BooksAPI.update(targetBook, newShelf)
       .then(() => {
         targetBook.shelf = newShelf;
@@ -117,52 +105,5 @@ class MyReadsApp extends React.Component {
     );
   }
 }
-
-//   render() {
-//     return (
-//       <div className="app">
-//         <Fragment>
-//           <h2 className="shelf__list__header">MyReads</h2>
-//           <div className="shelf__list__container">
-//             <div className="shelf__list__currentlyReading">
-//               <h3>Currently Reading</h3>
-//               {this.state.bookArray
-//                 .filter((book) => book.shelf === "currentlyReading")
-//                 .map((book) => (
-//                   <Book
-//                     // pass props to child
-//                     book={book}
-//                     key={book.id}
-//                   />
-//                 ))}
-//             </div>
-//             <div className="shelf__list__wantToRead">
-//               <h3>Want To Read</h3>
-//               {this.state.bookArray
-//                 .filter((book) => book.shelf === "wantToRead")
-//                 .map((book) => (
-//                   <Book
-//                     book={book}
-//                     key={book.id}
-//                     changeShelf={(targetBook, newShelf) => {
-//                       this.changeShelf(targetBook, newShelf);
-//                     }}
-//                   />
-//                 ))}
-//             </div>
-//             <div className="shelf__list__finishedReading">
-//               <h3>Finished Reading</h3>
-//               {this.state.bookArray
-//                 .filter((book) => book.shelf === "read")
-//                 .map((book) => (
-//                   <Book book={book} key={book.id} />
-//                 ))}
-//             </div>
-//           </div>
-//         </Fragment>
-//       </div>
-//     );
-//   }
-// }
 
 export default MyReadsApp;
