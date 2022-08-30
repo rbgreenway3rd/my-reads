@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import Book from "./Book";
 import * as BooksAPI from "../data/BooksAPI";
+import "./Search.css";
+import "./Book.css";
 
 // Copied from Udacity Starter Code
 class Search extends React.Component {
@@ -43,23 +45,33 @@ class Search extends React.Component {
     return (
       <div className="container">
         <div className="search__bar">
-          <Link className="close__search" to="/">
-            Close
-          </Link>
+          <div
+            className="tooltip"
+            data-toggle="tooltip"
+            title="Back To Shelves"
+            id="tooltip__text"
+          >
+            <Link className="close__search" to="/">
+              <i className="fa-solid fa-arrow-left fa-3x" />
+            </Link>
+          </div>
           <div className="search__input__container">
             <input
               className="search__input"
               type="text"
-              placeholder="Search by title or author"
+              placeholder="Search by title or author..."
               value={userQuery}
               onChange={this.searchBooks}
             />
           </div>
+          <div className="close__search fa-2x hidden__close__search" disabled>
+            <i className="fa-solid fa-arrow-left fa-3x" />
+          </div>
         </div>
-        <div className="search__results">
+        <div>
           {queriedBooks.length > 0 && (
-            <div>
-              <h3>
+            <div className="search__results">
+              <h3 className="search__results__header">
                 MyReads has found {queriedBooks.length} books that match your
                 query:
               </h3>

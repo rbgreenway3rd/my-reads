@@ -1,0 +1,11 @@
+.books {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-evenly;
+}
+
+.book {
+    display: flex;
+    flex-direction: column;
+}

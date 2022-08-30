@@ -1,0 +1,55 @@
+:root {
+    --primary-color: #f5ffda;
+    --secondary-color: #3d3d3c;
+    --tertiary-color: rgb(57, 133, 29)
+}
+
+.close__search {
+    margin-left: 1em;
+    margin-right: 1em;
+    margin-bottom: 0;
+    color: var(--primary-color);
+}
+
+.hidden__close__search {
+    cursor: default;
+    color: var(--tertiary-color)
+}
+
+.search__bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--tertiary-color);
+    border-bottom: 3px solid black;
+}
+
+.search__input {
+    font-size:x-large;
+    padding: 0.25em;
+    padding-bottom: 0;
+}
+
+.search__results__header {
+    margin-left: 0.5em;
+}
+
+.search__results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.books {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.books .book {
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-top: 1em;
+    padding-bottom: 2em;
+    flex: 1 1 20%;
+}

@@ -1,0 +1,24 @@
+.bookShelves {
+    display: flex;
+    flex-direction: column;
+    padding-left: 1em;
+    padding-right: 1em;
+    justify-content: center;
+}
+
+.shelf {
+    display: flex;
+    flex-direction: column;   
+    
+}
+
+.shelf__title {
+    display: flex;
+
+    border-bottom: 1px solid black;
+}
+
+.shelf__books {
+    display: flex;
+    flex-direction: column;
+}

@@ -1,5 +1,6 @@
 import React from "react";
 import BookShelf from "./BookShelf";
+import "./ShelfList.css";
 
 const ShelfList = (props) => {
   const { bookArray, shelfList, changeShelf } = props;
@@ -9,9 +10,9 @@ const ShelfList = (props) => {
       {shelfList.map((shelf) => {
         const shelfBooks = bookArray.filter((book) => book.shelf === shelf.key);
         return (
-          <div className="bookShelf" key={shelf.key} value={shelf.value}>
-            <h2 className="bookShelf__title">{shelf.value}</h2>
-            <div className="bookShelf__books">
+          <div className="shelf" key={shelf.key} value={shelf.value}>
+            <h2 className="shelf__title">{shelf.value}</h2>
+            <div className="shelf__books">
               <BookShelf
                 shelfBooks={shelfBooks}
                 changeShelf={changeShelf}

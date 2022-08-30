@@ -1,0 +1,45 @@
+:root {
+    --primary-color: #f5ffda;
+    --secondary-color: #3d3d3c;
+    --tertiary-color: rgb(57, 133, 29)
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    background-color: var(--tertiary-color);
+    border-bottom: 3px solid black;
+    margin-bottom: 0;
+    padding-bottom: 0.5em;
+}
+
+.header__title {
+    color: var(--primary-color);
+    font-size: 4em;
+    padding: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-top: 0;
+
+}
+
+.search__button {
+    padding: 0;
+    background: transparent;
+    border: none;
+    color: var(--primary-color);
+    margin-right: 0.5em;
+}
+
+.hidden__button {
+    padding: 0;
+    background: transparent;
+    border: none;
+    color: rgb(57, 133, 29);
+    margin-left: 0.5em;
+}
+
+

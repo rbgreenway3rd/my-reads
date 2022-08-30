@@ -34,15 +34,22 @@ class ShelfChanger extends React.Component {
 
     return (
       <div className="book-shelf-changer">
-        <select onChange={this.onChangeShelf} defaultValue={shelf}>
-          <option value="none" disabled>
-            None
-          </option>
-          <option value="currentlyReading">Currently Reading</option>
-          <option value="wantToRead">Want to Read</option>
-          <option value="read">Finished Reading</option>
-          <option value="remove">Remove</option>
-        </select>
+        <div
+          className="tooltip"
+          data-toggle="tooltip"
+          title="Move Book To Different Shelf"
+          id="tooltip__text"
+        >
+          <select onChange={this.onChangeShelf} defaultValue={shelf}>
+            <option value="none" disabled>
+              None
+            </option>
+            <option value="currentlyReading">Currently Reading</option>
+            <option value="wantToRead">Want to Read</option>
+            <option value="read">Finished Reading</option>
+            <option value="remove">Remove</option>
+          </select>
+        </div>
       </div>
     );
   }

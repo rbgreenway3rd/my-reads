@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ShelfChanger from "./ShelfChanger";
+import "./Book.css";
 
 class Book extends React.Component {
   static propTypes = {
@@ -34,7 +35,14 @@ class Book extends React.Component {
           <img className="book__image" src={bookImage} />
         </div>
         <div className="book__title">{book.title}</div>
-        <div className="book__authors">{book.authors}</div>
+        <div className="book__authors">
+          {book.authors &&
+            book.authors.map((author) => (
+              <div className="author" key={author}>
+                {author}
+              </div>
+            ))}
+        </div>
         <ShelfChanger
           book={book}
           bookArray={bookArray}
